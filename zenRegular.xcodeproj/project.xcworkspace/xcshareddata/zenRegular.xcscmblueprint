@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "DC9F67AAEA5E1AF12569F73C61AA9C3F134FCCFC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "DC9F67AAEA5E1AF12569F73C61AA9C3F134FCCFC" : 9223372036854775807,
+    "59C8773B449DB15836DECFEDB8EE41FE85555DE0" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "BE8C66D0-DAB3-4E1C-8578-F27DB88C1E10",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "DC9F67AAEA5E1AF12569F73C61AA9C3F134FCCFC" : "zenRegular\/",
+    "59C8773B449DB15836DECFEDB8EE41FE85555DE0" : "zenRegular\/zenRegular\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "zenRegular",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "zenRegular.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/sygriffin\/zenRegular.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "59C8773B449DB15836DECFEDB8EE41FE85555DE0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/sygriffin\/zenRegular.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DC9F67AAEA5E1AF12569F73C61AA9C3F134FCCFC"
+    }
+  ]
+}
