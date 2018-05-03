@@ -17,7 +17,7 @@
     
 }
 
-@property (nonatomic, readwrite, copy)NSString *myValue;
+@property (nonatomic, readwrite, copy) NSString *myValue;
 
 @property (assign, getter=isEditable) BOOL editable;
 
@@ -58,10 +58,7 @@
     [self.bArray removeAllObjects];
     //aArray崩溃，copy类型，拷贝出的是不可变的NSArray类型
 //    [self.aArray removeAllObjects];
-    
-    
-    
-    
+
     
     /*
      1.if语句要在语句体内执行
@@ -85,8 +82,8 @@
     NSLog(@"%d",result);
     NSLog(@"%d",result1);
      /*
-     6.尽量检查方法error的返回值而不是error的引用
-     7.case语句中一段代码要用大括号，用fall-through（移除case的break，下面的case继续执行）会继续向下执行，当switch对象为enum时default是不必要的，加入新值会警报
+     6.尽量检查方法的返回值而不是error的引用，系统API有些在成功的情况下会返回error是内存中的垃圾值
+     7.case语句中一段代码要用大括号，用fall-through（OC:移除case的break，下面的case继续执行,Swift:fallthrough关键字）会继续向下执行，当switch对象为enum时default是不必要的，加入新值会警报
      8.推荐使用NS_ENUM
      9.推荐使用长的描述性的方法变量名，尽量不要与系统冲突
      10.常量遵循驼峰法则，并以相关类名为前缀；使用常量代替字符串字面值和数字，方便复用快速修改，减少错误；常量应该声明为static静态常量而不是宏定义；常量应该以extern *类型 const +名字的形式暴露给外部，并在实现文件中给其赋值；注意：只有公有常量才需要添加命名空间作为前缀，尽管.m文件中私有常量的命名可以遵循另外一种模式，你仍旧可以遵循这个规则
@@ -176,6 +173,7 @@
       2)私有方法：永远不要在私有方法前加一个_前缀，这个前缀是Apple保留的，这样会有重载Apple私有方法的风险
       
       20.相等性(equality)
+      
       
       
       
