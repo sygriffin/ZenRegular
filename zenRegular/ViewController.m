@@ -8,6 +8,8 @@
 //
 //  禅与objc
 
+//  code organization is a matter of hygiene(代码组织是卫生问题)
+
 #import "ViewController.h"
 
 
@@ -81,6 +83,8 @@
     BOOL result1 = a>b ? : a<b;//推荐写法（无需再写出a>b）
     NSLog(@"%d",result);
     NSLog(@"%d",result1);
+    
+    
      /*
      6.尽量检查方法的返回值而不是error的引用，系统API有些在成功的情况下会返回error是内存中的垃圾值
      7.case语句中一段代码要用大括号，用fall-through（OC:移除case的break，下面的case继续执行,Swift:fallthrough关键字）会继续向下执行，当switch对象为enum时default是不必要的，加入新值会警报
@@ -173,12 +177,46 @@
       2)私有方法：永远不要在私有方法前加一个_前缀，这个前缀是Apple保留的，这样会有重载Apple私有方法的风险
       
       20.相等性(equality)
+      并不是简简单单的isEqual
+      实现相等时要记住这个约定：同时实现isEqual和hash方法（充分非必要条件：如果两个对象isEqual了那么hash方法返回值唯一但相反hash返回值相等两个对象不一定isEqual）
+      (因为很多集合类底层都是hash表数据结构)
+      [self.myValue hash] hash方法不能返回一个常量！！！
+      返回值会作为对象在hash散列表上的key --> 后果严重，百分百碰撞
+      (还是不要自己实现相等性方法比较了)
       
+      21.类目category
+      声明方法时依然要加上我们的前缀（防止方法覆盖）
+      把类打破在更多自我包含的组成部分里
+      (一个.h文件中包含多个分类，不同的分类在干不同的事情，不要去违背类的单一功能原则)
       
+      22.protocols（协议）--> 抽象接口
+      多态与继承 --> 面向协议编程仍然遵循里氏替换原则
       
+      23.NSNotification
+      定义通知名称的时候同样用extern这种静态字符串而并不是Marco
       
+      24.关于代码美化
+      不要另起一行写大括号，你愿意是写随你，反正公认很丑
+      if (user.name) {
       
+      }===>good
+      if (user.name)
+      {
       
+      }===>bad
+      
+      多参多方法冒号对齐
+      
+      这种Egyptain风格括号尽量用在代码段内以及所有控制语句中
+      非此类括号可以用在：类的实现、方法的实现
+      
+      可以多使用代码块
+      GCC和Clang均包含的特性如果代码块闭合在圆括号内，会返回最后语句的值
+      NSURL *url = ({
+      
+      });
+      
+      25.关于pragama和Clang
       
     
      */
@@ -190,6 +228,8 @@
     
     
     // Do any additional setup after loading the view, typically from a nib.
+    
+
 }
 
 
