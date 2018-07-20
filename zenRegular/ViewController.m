@@ -215,11 +215,127 @@
       NSURL *url = ({
       
       });
+      避免污染其他作用域
       
       25.关于pragama和Clang
+      不同功能组的方法
+      protocols 的实现
+      对父类方法的重写
       
-    
+      如果你知道你的代码不会造成错误，方法内去掉Clang警报
+      #pragma clang diagnostic push
+      #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+      
+      [myObj performSelector:mySelector withObject:name];
+      
+      #pragma clang diagnostic pop
+      
+      忽略没有使用的变量警告#pragma unused (foo)
+      - (NSInteger)giveMeFive
+      {
+      NSString *foo;
+      #pragma unused (foo)
+      
+      return 5;
+      }
+      注意pragma需要标记到问题代码之下
+      
+      标明编译器警告与错误
+      #warning Dude, don't compare floating point numbers like this!
+      #error Whoa, buddy, you need to check for zero here!
+      
+      26.关于注释
+      //单行注释
+      以及现在使用的多行注释
+      
+      一个函数必须有一个字符串文档，除非它符合下面的所有条件：非公开、很短、显而易见
+      
+      @description。。。头文档仅适用于.h文件
+      
+      27.block
+      关键点：
+      block 是在栈上创建的
+      block 可以复制到堆上
+      Block会捕获栈上的变量(或指针)，将其复制为自己私有的const(变量)。
+      (如果在Block中修改Block块外的)栈上的变量和指针，那么这些变量和指针必须用__block关键字申明(译者注：否则就会跟上面的情况一样只是捕获他们的瞬时值)。
+      __block 声明的变量和指针在 block 里面是作为显示操作真实值/对象的结构来对待的。
+      
+      在非 ARC 环境肯定会把它搞得很糟糕，并且野指针会导致 crash。__block 仅仅对 block 内的变量起作用，它只是简单地告诉 block：
+      嗨，这个指针或者原始的类型依赖它们在的栈。请用一个栈上的新变量来引用它。我是说，请对它进行双重解引用，不要 retain 它。
+      如果在定义之后但是 block 没有被调用前，对象被释放了，那么 block 的执行会导致 crash。 __block 变量不会在 block 中被持有，最后... 指针、引用、解引用以及引用计数变得一团糟。
+      
+      防止self循环引用
+      
+      直接使用self -> 只能在 block 不是作为一个 property 的时候使用，否则会导致 retain cycle。
+      只使用weakSelf -> 当 block 被声明为一个 property 的时候使用。
+      __weak __typeof(self) weakSelf = self;
+      [self executeBlock:^(NSData *data, NSError *error) {
+      [weakSelf doSomethingWithData:data];
+      }];
+      先weak后strong -> 和并发执行有关。当涉及异步的服务的时候，block 可以在之后被执行，并且不会发生关于 self 是否存在的问题。
+      __weak __typeof(self)weakSelf = self;
+      [self executeBlock:^(NSData *data, NSError *error) {
+      __strong __typeof(weakSelf) strongSelf = weakSelf;
+      if (strongSelf) {
+      [strongSelf doSomethingWithData:data];
+      [strongSelf doSomethingWithData:data];
+      }
+      }];
+      
+      深度理解trivialBlock
+      trivial block 是一个不被传送的 block ，它在一个良好定义和控制的作用域里面，weak 修饰只是为了避免循环引用。
+      (详见effictive-objc2.0书中有相应见解)
+      
+      28.关于protocal委托与数据源两种模式
+      关于委托，空方法返回的即回调
+      当委托者询问代理者一些信息的时候，这就暗示着信息是从代理者流向委托者而非相反的过程。 这(译者注：委托者 ==Data==> 代理者)是概念性的不同，须用另一个新的名字来描述这种模式：数据源模式。
+      此处说一下UITableViewDataSource
+      - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+      - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
+      此时委托者需要从数据源对象拉取数据
+      以上两个方法 Apple 混合了展示层和数据层，实际上这不是一个好的设计，但是很少的开发者感到糟糕。而且我们在这里把空返回值和非空返回值的方法都天真地叫做委托方法。
+      
+      继承重写代理方法的坑
+      假设以下情况
+      UIViewControllerB < UIViewControllerA < UIViewController
+      STEP1 --> UIViewControllerA 遵从 UITableViewDelegate 并且实现了
+      - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{}
+      
+      STEP2 --> 你可能会想要在 UIViewControllerB 中提供一个不同的实现，这个实现可能是这样子的：
+      - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+      CGFloat retVal = 0;
+      if ([super respondsToSelector:@selector(tableView:heightForRowAtIndexPath:)]) {
+      retVal = [super tableView:self.tableView heightForRowAtIndexPath:indexPath];
+      }
+      return retVal + 10.0f;
+      }
+      但是如果超类(UIViewControllerA)没有实现这个方法呢？此时调用[super respondsToSelector:@selector(tableView:heightForRowAtIndexPath:)]方法，将使用 NSObject 的实现，在 self 上下文深入查找并且明确 self 实现了这个方法（因为 UITableViewControllerA 遵从 UITableViewDelegate），但是应用将在下一行发生崩溃，并提示如下错误信息：
+      *** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[UIViewControllerB tableView:heightForRowAtIndexPath:]: unrecognized selector sent to instance 0x8d82820'
+      
+      STEP3 --> 这种情况下我们需要来询问特定的类实例是否可以响应对应的 selector。下面的代码提供了一个小技巧：
+      - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+      CGFloat retVal = 0;
+      if ([[UIViewControllerA class] instancesRespondToSelector:@selector(tableView:heightForRowAtIndexPath:)]) {
+      retVal = [super tableView:self.tableView heightForRowAtIndexPath:indexPath];
+      }
+      return retVal + 10.0f;
+      }
+      
+      多重委托
+      委托和数据源是对象之间的通讯模式，但是只涉及两个对象：委托者和委托。
+      数据源模式强制一对一的关系，当发送者请求信息时有且只能有一个对象来响应。对于代理模式而言这会有些不同，我们有足够的理由要去实现很多代理者等待(唯一委托者的)回调的场景。
+      相当于一个代理弱引用调度中心，所有委托的注册和解除都在这里
+      
+      面向切面编程
+      在类的特定方法调用前运行特定的代码
+      在类的特定方法调用后运行特定的代码
+      增加代码来替代原来的类的方法的实现
+      
+      稍后会整理到印象笔记
+      
+      
      */
+    
 
 
     

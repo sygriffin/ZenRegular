@@ -207,7 +207,7 @@
 				TargetAttributes = {
 					1156DAD41F25D51A008668F3 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = XAU57UXW2V;
+						DevelopmentTeam = XHZ4PYK93S;
 						ProvisioningStyle = Automatic;
 					};
 					1156DAED1F25D51A008668F3 = {
@@ -429,7 +429,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = XAU57UXW2V;
+				DEVELOPMENT_TEAM = XHZ4PYK93S;
 				INFOPLIST_FILE = zenRegular/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.citic.zenRegular;
@@ -441,7 +441,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = XAU57UXW2V;
+				DEVELOPMENT_TEAM = XHZ4PYK93S;
 				INFOPLIST_FILE = zenRegular/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.citic.zenRegular;
@@ -518,6 +518,7 @@
 				1156DB041F25D51B008668F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1156DB051F25D51B008668F3 /* Build configuration list for PBXNativeTarget "zenRegularTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +527,7 @@
 				1156DB071F25D51B008668F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1156DB081F25D51B008668F3 /* Build configuration list for PBXNativeTarget "zenRegularUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +536,7 @@
 				1156DB0A1F25D51B008668F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
