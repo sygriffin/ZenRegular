@@ -12,6 +12,14 @@
 
 #import "ViewController.h"
 
+//采用Module加快链接、编译速度
+@import UIKit.UIView;
+
+typedef NS_OPTIONS(NSUInteger, UIViewAction) {
+    UIViewAction1   = 0,
+    UIViewAction2   = 1 << 0,
+};
+
 
 
 @interface ViewController (){
@@ -336,8 +344,44 @@
       
      */
     
+    /** 类似书籍：改善objc的61个建议
+     *  NS_OPTION不失为NS_ENUM的另一个选择
+     *  *未来需要了解的点--objc-c++混编
+     *  关于Tagged Point的概念--/保存更多信息，提升内存访问速度，提高isa指针的处理效率
+     *  *未来需要了解的点--内存对齐--内存结构
+     *  编译器对NSString是进行过优化的，相同的永远指向同一块内存地址，release是无效的
+     *  BOOL避免直接和YES作比较，逻辑运算符也可以有效返回BOOL类型
+     *  关于内存 -- 计算机组成原理与操作系统补一波
+     *  *内存管理 -- 留到高性能详细研究，现暂时停留在进阶阶段
+     *
+     *  很多MRC/MRR时代留下的一些奇奇怪怪的东西 -- 知道理解即可，不进行深入研究了
+     *
+     *  命名规则 = 基本规则 + 开心就好
+     *  关于访问限制 -- 该什么时候用就什么时候用
+     *
+     *
+     */
 
+    ///以下两个均为空指针
+    NSString *ptr = nil;
+    NSString *ptr1 = NULL;
+    int *ptr2 = NULL;
+    if(ptr2) {
+        //非空指针
+    } else {
+        //空指针
+    }
+    NSNumber *number1 = @1;
+    SYLog(@"%p",number1);
+    
+    id str = @"12122";
+    SYLog(@"%@",[str class]);
+    
+    
 
+    
+    
+    
     
     
     
@@ -347,6 +391,8 @@
     
 
 }
+
+
 
 
 - (void)didReceiveMemoryWarning {
