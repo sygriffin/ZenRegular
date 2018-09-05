@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
+{
+    NSString *_name;
+}
 
+@property (nonatomic, copy) NSString *name;
 
+@property (nonatomic, readonly, copy) NSString *Num;
 
 @end
 

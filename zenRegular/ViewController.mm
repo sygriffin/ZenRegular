@@ -13,11 +13,19 @@
 #import "ViewController.h"
 
 //采用Module加快链接、编译速度
-@import UIKit.UIView;
+//@import UIKit.UIView;
 
 typedef NS_OPTIONS(NSUInteger, UIViewAction) {
     UIViewAction1   = 0,
     UIViewAction2   = 1 << 0,
+};
+
+//objc-C++
+class MouseListner {
+public:
+    virtual bool mousePressed(void) = 0;
+    virtual bool mouseClicked(void) = 0;
+    
 };
 
 
@@ -36,6 +44,9 @@ typedef NS_OPTIONS(NSUInteger, UIViewAction) {
 @property (nonatomic, strong) NSMutableArray *bArray;
 
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
+
+//属性的篡改 -- Num由只读到读写
+@property (nonatomic,readwrite,copy) NSString *Num;
 
 
 @end
@@ -79,6 +90,7 @@ typedef NS_OPTIONS(NSUInteger, UIViewAction) {
     //yoda表达式（仅适用于nil和BOOL检查）
     if (nil == _myValue){}
     //引发错误！！！
+#warning wrong express
     if (_myValue = nil){}
     /*
      3.不要嵌套if，多用return减少复杂度（即先判!if情况），方法的重要部分不要嵌套在分支里
@@ -357,8 +369,18 @@ typedef NS_OPTIONS(NSUInteger, UIViewAction) {
      *  很多MRC/MRR时代留下的一些奇奇怪怪的东西 -- 知道理解即可，不进行深入研究了
      *
      *  命名规则 = 基本规则 + 开心就好
-     *  关于访问限制 -- 该什么时候用就什么时候用
+     *  关于访问限制 -- 针对实例变量关键字，该什么时候用就什么时候用
+     *  透彻了解属性 -- 利用扩展可以对属性进行篡改！！！
+     *  MRC时代对getter和setter方法的处理在进行读写操作时分别需要注意的细节
+     *  虚方法（虚函数）OC里的方法都是虚方法（virtual和@override关键字都省略了）通过正式协议@protocol就实现了纯虚函数的功能
+     *  关于super，打算补充基类的实现行为就要调用super，替换基类实现行为则不需要调用
+     *  *详细调查视图生命周期，initWithFrame:与initWithCoder:
+     *  KVC&KVO注意事项 -- 间接访问类属性要使用valueForKeyPath -- 按层深度去寻找
+     *  *KVC-实现原理isa-swizzling -- 引申：什么是isa-swizzling，runtime相关内容深入
+     *  KVO -- NSKeyValueObserving非正式协议 -- 注册观察者记得要解除注册，否则会导致内存泄漏 -- 设计模式：观察者模式
+     *  
      *
+     *  *
      *
      */
 
@@ -378,9 +400,13 @@ typedef NS_OPTIONS(NSUInteger, UIViewAction) {
     SYLog(@"%@",[str class]);
     
     
-
+    self.name = @"2";
+    _name = @"2";
     
+    NSString *aName = _name;
+    NSString *bName = self.name;
     
+    SYLog(@"%@,%@",aName,bName);
     
     
     
@@ -392,8 +418,17 @@ typedef NS_OPTIONS(NSUInteger, UIViewAction) {
 
 }
 
+- (void)setName:(NSString *)name {
+    _name = name;
+}
 
+- (NSString *)name {
+    return _name;
+}
 
+//- (BOOL)resolveInstanceMethod:(SEL) sel {
+//    return [super resolveInstanceMethod:sel];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
