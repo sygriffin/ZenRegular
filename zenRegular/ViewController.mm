@@ -386,8 +386,13 @@ public:
         3.方法实现和协议遵循respondsToSelector、conformsToProtocol 4.对象的比较hash（NSObject中的isEqual默认检查方法只能简单检查指针是否相等）、isEqual (isEqual判断相等，必然有相同的hash值)
         （三部曲：先比较指针，再比较类，最后强制类型检查）
      *  尽可能使用不可变对象而非可变对象（可变的开销更大，不确定的情况下用不可变对象处理）
+     *  OC不支持多继承 -- 两个类或者对象巧妙融合（复合）-- 实现方法：说的很复杂，其实就是多个不同的子类继承自同一个父类
+     *  使用extension来隐藏实现细节（还记得readonly -> readwrite吗）
+     *  注意block的循环引用（weak-strong self dance）
+     *  类别的使用（注意方法避免重名冲突）
+     *  ARC，现在已经是ARC了，MRC就看看吧
+     *  unsafe_unretained 有悬挂指针的危险（参考assign）（weak嘿嘿一笑）
      *  
-     *
      *
      *
      *  *
