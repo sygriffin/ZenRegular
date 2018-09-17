@@ -378,7 +378,17 @@ public:
      *  KVC&KVO注意事项 -- 间接访问类属性要使用valueForKeyPath -- 按层深度去寻找
      *  *KVC-实现原理isa-swizzling -- 引申：什么是isa-swizzling，runtime相关内容深入
      *  KVO -- NSKeyValueObserving非正式协议 -- 注册观察者记得要解除注册，否则会导致内存泄漏 -- 设计模式：观察者模式
+     *  关于NSCopying
+     *  使用Protocol来实现匿名对象的提供 -- 引申：iOS内实现接口编程
+     *  当.m过于庞大的时候可以使用Catagory
+     *  适当使用内省 -- 内省（Introspection）-- 高效的使用NSObject的内省方法
+     *  1.确定对象在类层次中的位置class、superclass 2.检查对象类的从属关系isKindOfClass（接收者是否为给定类或其继承类的实例）、isMemberOfClass（接收者是否为指定类实例）
+        3.方法实现和协议遵循respondsToSelector、conformsToProtocol 4.对象的比较hash（NSObject中的isEqual默认检查方法只能简单检查指针是否相等）、isEqual (isEqual判断相等，必然有相同的hash值)
+        （三部曲：先比较指针，再比较类，最后强制类型检查）
+     *  尽可能使用不可变对象而非可变对象（可变的开销更大，不确定的情况下用不可变对象处理）
      *  
+     *
+     *
      *
      *  *
      *
@@ -393,11 +403,13 @@ public:
     } else {
         //空指针
     }
+    
     NSNumber *number1 = @1;
     SYLog(@"%p",number1);
     
     id str = @"12122";
     SYLog(@"%@",[str class]);
+    
     
     
     self.name = @"2";
