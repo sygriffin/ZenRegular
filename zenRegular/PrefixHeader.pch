@@ -15,7 +15,7 @@
 ///DEBUGLog
 #ifdef DEBUG
 
-#define SYLog(format, ...) printf("============================\nlocation:<当前地址:%p>\nclass:<当前类及所在行数:%s:(%d)>\nmethod:<当前方法执行: %s>\noutput:<输出日志:>\n%s\n============================\n", self, [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __PRETTY_FUNCTION__, [[NSString stringWithFormat:(format), ##__VA_ARGS__] UTF8String] )
+#define SYLog(format, ...) printf("============================\nlocation:<当前基类地址:%p>\nclass:<当前类及所在行数:%s:(%d)>\nmethod:<当前方法执行: %s>\noutput:<输出日志:>\n%s\n============================\n", self, [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, __PRETTY_FUNCTION__, [[NSString stringWithFormat:(format), ##__VA_ARGS__] UTF8String] )
 
 #else
 

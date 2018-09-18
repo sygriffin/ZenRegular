@@ -392,10 +392,12 @@ public:
      *  类别的使用（注意方法避免重名冲突）
      *  ARC，现在已经是ARC了，MRC就看看吧
      *  unsafe_unretained 有悬挂指针的危险（参考assign）（weak嘿嘿一笑）
+     *  KVC/KVO作为一个面试点单独去整理（在effective objc2.0里还会出现吧，详细整理）
+     *  浅复制适用于指针而深复制适用于数据
+     *
+     *
      *  
      *
-     *
-     *  *
      *
      */
 
@@ -425,11 +427,18 @@ public:
     
     SYLog(@"%@,%@",aName,bName);
     
+    NSString *ts = @"1111";
+    NSString *qs = [ts copy];
+    NSMutableString *rs = [ts mutableCopy];
+    SYLog(@"%p",ts);
+    SYLog(@"%p",qs);
+    SYLog(@"%p",rs);
+    SYLog(@"%p",&ts);
+    SYLog(@"%p",&qs);
+    SYLog(@"%p",&rs);
     
     
-    
-    
-    
+
     // Do any additional setup after loading the view, typically from a nib.
     
 
