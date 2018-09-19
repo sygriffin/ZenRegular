@@ -56,6 +56,7 @@ public:
 @synthesize myValue = _myValue;
 
 - (NSDateFormatter *)dateFormatter{
+
     if (!_dateFormatter){
         _dateFormatter = [[NSDateFormatter alloc]init];
         NSLocale *enLocale = [[NSLocale alloc]initWithLocaleIdentifier:@"en_US_POSIX"];
@@ -396,7 +397,11 @@ public:
      *  浅复制适用于指针而深复制适用于数据
      *  明确isa在继承上的作用（isa指针指向的是对象的类，类也是个对象，也有自己的权限，是根据类的定义编译而来的。类的对象负责维护一个方法调度表，该表的本质是由指向类方法的指针组成；类对象中还保留了一个基类的指针，该指针也有自己的方法调度表和基类。第一个isa指向的是自己的原类metaclassobjc）
      *  利用类别、协议、扩展来扩充自己的程序。注意：打算补充基类的实现行为就调用super，打算替换基类实现行为就不要调用super
+     *  委托用于界面控制，而数据源用于数据控制
+     *  了解alloc与init：alloc方法使用应用程序默认的虚存区，这是一个按页对齐的内存区域，用于存放应用程序分配的对象和数据；alloc过程不仅分配内存还会初始化两个非常重要的属性--isa实例变量和retainCount；用工厂方法避免盲目分配不必要的内存
+     *  应该从内初始化方法中直接访问实例变量（防止未初始化完就访问造成的问题）；执行（self = [super init]）防止父类可能出现的无法正确初始化。
      *  
+     *
      *  
      *
      *
