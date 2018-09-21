@@ -407,6 +407,15 @@ public:
      *
      */
 
+    /** 从effictive-objc2.0再看前两本书总结
+     *  前言：关于这个代码效率规范以及代码美化优化，写出高效可读性高的代码
+     *  书中很多内容都有类似，仅仅作为补充
+     *
+     *  适当的位置使用关联属性（见askUserQuestion方法）
+     *  
+     *
+     */
+    
     ///以下两个均为空指针
     NSString *ptr = nil;
     NSString *ptr1 = NULL;
@@ -450,6 +459,13 @@ public:
     // Do any additional setup after loading the view, typically from a nib.
     
 
+}
+
+- (void)askUserQuestion {
+    
+///关联对象的使用 -- 对象、key、value、关联属性策略
+//    objc_setAssociatedObject(<#id  _Nonnull object#>, <#const void * _Nonnull key#>, <#id  _Nullable value#>, <#objc_AssociationPolicy policy#>)
+    
 }
 
 - (void)setName:(NSString *)name {
